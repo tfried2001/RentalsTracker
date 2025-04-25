@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - RentTracker{% endblock %}
+
+{% block content %}
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+    {% comment %} Optional: Add buttons or controls here if needed {% endcomment %}
+    <!-- {# <div class="btn-toolbar mb-2 mb-md-0">
+      <div class="btn-group me-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary">Share</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary">Export</button>
+      </div>
+    </div> #} -->
+  </div>
+
+  <p>Welcome, {{ user_first_name }}!</p>
+  <hr>
+
+  <div class="row">
+    {# LLC Summary Widget Column #}
+    <div class="col-md-6 col-lg-4 mb-4"> {# Adjust column size as needed #}
+        <div class="card">
+            <div class="card-header">
+                LLC Filing Status Summary
+            </div>
+            <div class="card-body">
+                {% if llcs %}
+                    <ul class="list-unstyled mb-0"> {# Use list-unstyled for cleaner look #}
+                        {% for llc in llcs %}
+                            <li class="d-flex justify-content-between align-items-center mb-2 pb-1 border-bottom">
+                                <span title="{{ llc.name }}">{{ llc.name|truncatechars:25 }}</span> {# Truncate long names #}
+                                <span>
+                                    {% comment %} Reuse the status indicator logic {% endcomment %}
+                                    {% with status=llc.get_filing_status %}
+                                        {% if status == 'green' %}
+                                            <span title="Good" style="display: inline-block; width: 15px; height: 15px; border-radius: 50%; background-color: green; vertical-align: middle;"></span>
+                                        {% elif status == 'yellow' %}
+                                            <span title="Approaching Deadline" style="display: inline-block; width: 15px; height: 15px; border-radius: 50%; background-color: orange; vertical-align: middle;"></span>
+                                        {% elif status == 'red' %}
+                                            <span title="Check Filing" style="display: inline-block; width: 15px; height: 15px; border-radius: 50%; background-color: red; vertical-align: middle;"></span>
+                                        {% elif status == 'unknown' %}
+                                             <span title="Unknown" style="display: inline-block; width: 15px; height: 15px; border-radius: 50%; background-color: grey; vertical-align: middle;"></span>
+                                        {% endif %}
+                                    {% endwith %}
+                                </span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                     <a href="{% url 'rentals:llc_list' %}" class="btn btn-sm btn-outline-primary mt-3">View All LLCs</a>
+                {% else %}
+                    <p class="card-text text-muted">No LLCs found.</p>
+                    {# Optional: Link to add LLC if none exist #}
+                    {# <a href="#" class="btn btn-sm btn-primary">Add First LLC</a> #}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {# Placeholder for other dashboard widgets #}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                Other Summary (Example)
+            </div>
+            <div class="card-body">
+                <p class="card-text">Future content here (e.g., Vacant Properties, Rent Due).</p>
+            </div>
+        </div>
+    </div>
+
+  </div> {# End .row #}
+
+  <p>This is your protected dashboard area. From here you will be able to manage:</p>
+  <ul>
+      <li>LLCs</li>
+      <li>Properties</li>
+      <li>Tenants</li>
+      <li>Payments</li>
+  </ul>
+  <p><a href="/admin/" class="btn btn-secondary">Go to Admin Interface</a></p>
+
+
+{% endblock %}
