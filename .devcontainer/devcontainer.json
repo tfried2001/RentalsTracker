@@ -22,7 +22,8 @@
 		  "extensions": [
 			"ms-python.python",
 			"ms-python.vscode-pylance",
-			"google.geminicodeassist"
+			"google.geminicodeassist",
+			"eamodio.gitlens"
 			// Add other extensions like linters, formatters etc.
 		  ]
 		}
