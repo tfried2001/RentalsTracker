@@ -26,19 +26,30 @@
               <li class="nav-item">
                 <a class="nav-link" href="{% url 'rentals:dashboard' %}">Dashboard</a>
               </li>
-              {# Conditionally show LLCs link #}
-              {% if perms.rentals.view_llc %}
+            {% endif %}
+            {# Conditionally show LLCs link #}
+            {% if perms.rentals.view_llc %}
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'rentals:llc_list' %}">LLCs</a>
               </li>
-              {% endif %}
-              {# Conditionally show Properties link #}
-              {% if perms.rentals.view_property %}
+            {% endif %}
+            {# Conditionally show Properties link #}
+            {% if perms.rentals.view_property %}
               <li class="nav-item">
                   <a class="nav-link" href="{% url 'rentals:property_list' %}">Properties</a>
               </li>
-              {% endif %}
-              {# Add links for Tenants, Payments etc. similarly #}
+            {% endif %}
+            {% if perms.rentals.view_tenant %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'rentals:tenant_list' %}">Tenants</a>
+              </li>
+            {% endif %}
+            {% if perms.rentals.view_payment %}
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'rentals:payment_list' %}">Payments</a>
+              </li>
+            {% endif %}
+            {# Add links for Tenants, Payments etc. similarly #}
               <!-- {# {% if perms.rentals.view_tenant %}
               <li class="nav-item">
                   <a class="nav-link" href="#">Tenants</a> {# Add URL later #}
@@ -48,7 +59,6 @@
               <li class="nav-item">
                 <a class="nav-link" href="/admin/">Admin</a> <!-- Quick link to admin -->
               </li>
-            {% endif %}
           </ul>
           <!--
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
